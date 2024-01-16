@@ -1,4 +1,4 @@
-name: labzad2.yaml
+name: labzad2.yml
 on:
   workflow_dispatch:
   push:
