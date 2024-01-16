@@ -1,4 +1,4 @@
-name: lab10zad2.yml
+name: lab10zad2
 on:
   workflow_dispatch:
   push:
