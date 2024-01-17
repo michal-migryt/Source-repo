@@ -11,6 +11,8 @@ on:
 jobs:
   dockerCI:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ env.version }}
     steps:
     - name: Check out to repo
       uses: actions/checkout@v4
@@ -36,6 +38,7 @@ jobs:
         context: .
         push: true
         tags: michalmigryt/lab10image:${{ env.version }}
+    
 
   kubernetesCI:
     needs: dockerCI
@@ -48,7 +51,7 @@ jobs:
           repository: michal-migryt/Config-repo
           token: ${{ secrets.CONFIG_TOKEN }}
       - run: |
-          sed -i 's/michalmigryt\/lab10image:.*/michalmigryt\/lab10image:${{ needs.dockerCI.env.version }}/g' deployment.yaml
+          sed -i 's/michalmigryt\/lab10image:.*/michalmigryt\/lab10image:${{ needs.dockerCI.outputs.version }}/g' deployment.yaml
           git config user.name action_user
           git config user.email action_user@example.com
           git add -u
